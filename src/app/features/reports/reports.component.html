@@ -1,0 +1,28 @@
+<div class="reports-container">
+  <h1 class="page-title">Reports</h1>
+
+  <div class="reports-grid">
+    <div class="report-card" *ngFor="let report of reports">
+      <p-card>
+        <div class="report-content">
+          <div class="report-icon" [style.background-color]="report.color">
+            <i [class]="'pi ' + report.icon"></i>
+          </div>
+          <div class="report-info">
+            <h3>{{ report.title }}</h3>
+            <p>{{ report.description }}</p>
+          </div>
+          <p-button 
+            label="View Report"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            (onClick)="navigateToReport(report.route)"
+            styleClass="view-report-button"
+            [rounded]="true"
+          ></p-button>
+        </div>
+      </p-card>
+    </div>
+  </div>
+</div>
+

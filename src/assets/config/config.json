@@ -1,0 +1,19 @@
+{
+  "tenantCode": "JAEnergy",
+  "tenantName": "JA Energy",
+  "apiBaseUrl": "https://api.auditportal.example.com",
+  "environment": "production",
+  "appName": "Energy Audit Portal",
+  "version": "1.0.0",
+  "features": {
+    "enableReports": true,
+    "enableNotifications": true,
+    "enableExport": true
+  },
+  "settings": {
+    "autoSaveInterval": 60000,
+    "sessionTimeout": 3600000,
+    "maxFileSize": 10485760
+  }
+}
+

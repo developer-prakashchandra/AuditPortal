@@ -1,0 +1,272 @@
+{
+  "id": "CCPP22_DEMIN_PLANT",
+  "title": "CCPP-22 DEMIN PLANT LOCAL LOG SHEET",
+  "formCode": "PO/GEN.01.F171",
+  "groupCode": "DEMIN_PLANT",
+  "groupName": "DEMIN PLANT",
+  "description": "Dubai Power Operations Procedures - DEMIN Plant Local Log Sheet for daily monitoring",
+  "version": "1.0",
+  "nextReviewDate": "2026-05-08",
+  "sections": [
+    {
+      "title": "General Information",
+      "layout": "columns",
+      "columns": 2,
+      "fields": [
+        {
+          "name": "date",
+          "label": "Date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "day",
+          "label": "Day",
+          "type": "text",
+          "required": false,
+          "readonly": true
+        }
+      ]
+    },
+    {
+      "title": "Audit Information",
+      "layout": "rows",
+      "rowHeaders": ["Shift-A", "Shift-B"],
+      "fieldGroups": [
+        {
+          "groupTitle": "Time",
+          "fields": [
+            {
+              "name": "time",
+              "label": "Time",
+              "type": "time",
+              "required": true
+            }
+          ]
+        },
+        {
+          "groupTitle": "MIXED BED-1",
+          "fields": [
+            {
+              "name": "mixedBed1Status",
+              "label": "Status (IS/SB)",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "label": "In Service", "value": "IS" },
+                { "label": "Standby", "value": "SB" }
+              ]
+            },
+            {
+              "name": "mixedBed1OutletFlow",
+              "label": "Outlet Flow (M3/HR)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "mixedBed1OutletConductivity",
+              "label": "Outlet Conductivity (us/cm)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "mixedBed1OutletSilica",
+              "label": "Outlet Silica (ppm)",
+              "type": "number",
+              "required": true
+            }
+          ]
+        },
+        {
+          "groupTitle": "MIXED BED-2",
+          "fields": [
+            {
+              "name": "mixedBed2Status",
+              "label": "Status (IS/SB)",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "label": "In Service", "value": "IS" },
+                { "label": "Standby", "value": "SB" }
+              ]
+            },
+            {
+              "name": "mixedBed2OutletFlow",
+              "label": "Outlet Flow (M3/HR)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "mixedBed2OutletConductivity",
+              "label": "Outlet Conductivity (us/cm)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "mixedBed2OutletSilica",
+              "label": "Outlet Silica (ppm)",
+              "type": "number",
+              "required": true
+            }
+          ]
+        },
+        {
+          "groupTitle": "RAW WATER PUMP",
+          "fields": [
+            {
+              "name": "rawWaterPumpStatus",
+              "label": "Status (I/S)",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "label": "In Service", "value": "IS" },
+                { "label": "Out of Service", "value": "OOS" }
+              ]
+            },
+            {
+              "name": "rawWaterSuctionPressure",
+              "label": "Suction Pressure (BAR)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "rawWaterDischPressure",
+              "label": "Discharge Pressure (BAR)",
+              "type": "number",
+              "required": true
+            }
+          ]
+        },
+        {
+          "groupTitle": "DEMIN WATER PUMP",
+          "fields": [
+            {
+              "name": "deminWaterPumpStatus",
+              "label": "Status (I/S)",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "label": "In Service", "value": "IS" },
+                { "label": "Out of Service", "value": "OOS" }
+              ]
+            },
+            {
+              "name": "deminWaterSuctionPressure",
+              "label": "Suction Pressure (BAR)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "deminWaterDischPressure",
+              "label": "Discharge Pressure (BAR)",
+              "type": "number",
+              "required": true
+            }
+          ]
+        },
+        {
+          "groupTitle": "CARTRIDGE FILTER",
+          "fields": [
+            {
+              "name": "cartridgeFilterStatus",
+              "label": "Status (I/S - 1/2)",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "label": "Filter 1", "value": "1_IS" },
+                { "label": "Filter 2", "value": "2_IS" },
+                { "label": "Both", "value": "BOTH_IS" }
+              ]
+            },
+            {
+              "name": "pressureBeforeFilter",
+              "label": "Pressure Before Filter (BAR)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "pressureAfterFilter",
+              "label": "Pressure After Filter (BAR)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "filterDP",
+              "label": "Filter DP (BAR)",
+              "type": "number",
+              "required": true
+            }
+          ]
+        },
+        {
+          "groupTitle": "STORAGE TANK LEVELS",
+          "fields": [
+            {
+              "name": "rawWaterTankLevel",
+              "label": "Raw Water Tank (Mtrs)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "deminWaterTankLevel",
+              "label": "Demin Water Tank (Mtrs)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "hclTankLevel",
+              "label": "HCL Tank (%)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "naohTankLevel",
+              "label": "NaOH Tank (%)",
+              "type": "number",
+              "required": true
+            },
+            {
+              "name": "neutralisingTankLevel",
+              "label": "Neutralising Tank (%)",
+              "type": "number",
+              "required": true
+            }
+          ]
+        },
+        {
+          "groupTitle": "General Remarks",
+          "fields": [
+            {
+              "name": "generalRemarks",
+              "label": "Remarks (CHKS)",
+              "type": "textarea",
+              "rows": 2,
+              "required": false
+            }
+          ]
+        },
+        {
+          "groupTitle": "Operator Signature",
+          "fields": [
+            {
+              "name": "operatorName",
+              "label": "Operator Name",
+              "type": "text",
+              "value": "John Smith",
+              "readonly": true,
+              "required": true
+            },
+            {
+              "name": "operatorId",
+              "label": "Employee ID",
+              "type": "text",
+              "value": "EMP-2024-001",
+              "readonly": true,
+              "required": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<div class="location-container">
+  <h1 class="page-title">Areas</h1>
+
+  <div class="areas-grid">
+    <p-card class="area-card" *ngFor="let area of areas">
+      <div class="area-card__body">
+        <div>
+          <h2>{{ area.name }}</h2>
+          <p class="area-description" *ngIf="area.description">{{ area.description }}</p>
+          <p class="area-meta" *ngIf="area.lastAudit">
+            Last audit: <strong>{{ area.lastAudit }}</strong>
+          </p>
+        </div>
+        <p-button 
+          label="View"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          (onClick)="openArea(area)"
+          styleClass="view-button"
+          [rounded]="true"
+        ></p-button>
+      </div>
+    </p-card>
+  </div>
+</div>
+
+

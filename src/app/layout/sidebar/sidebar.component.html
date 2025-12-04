@@ -1,0 +1,84 @@
+<div class="sidebar" [class.collapsed]="collapsed">
+  <!-- Tenant Header -->
+  <div class="sidebar-header" *ngIf="!collapsed">
+    <div class="tenant-info">
+      <div class="tenant-icon">
+        <i class="pi pi-building"></i>
+      </div>
+      <div class="tenant-details">
+        <span class="tenant-name">{{ tenantName }}</span>      
+      </div>
+    </div>
+  </div>
+
+  <!-- Collapsed Tenant Icon -->
+  <div class="sidebar-header-collapsed" *ngIf="collapsed">
+    <div class="tenant-icon-small">
+      <i class="pi pi-building"></i>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="menu-list">
+      <ng-container *ngFor="let item of menuItems">
+        <li class="menu-item" *ngIf="item.separator !== true">
+          <div 
+            class="menu-item-content"
+            [class.active]="isActive(item)"
+            [class.has-children]="item.children && item.children.length > 0"
+            (click)="onMenuItemClick(item)"
+          >
+            <i [class]="item.icon || 'pi pi-circle'" class="menu-icon"></i>
+            <span class="menu-label" *ngIf="!collapsed">{{ item.label }}</span>
+            <i 
+              *ngIf="item.children && item.children.length > 0 && !collapsed"
+              [class]="item.expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+              class="expand-icon"
+            ></i>
+          </div>
+
+          <!-- Sub-menu Level 1 -->
+          <ul 
+            class="submenu"
+            *ngIf="item.children && item.children.length > 0 && item.expanded && !collapsed"
+          >
+            <li class="submenu-item" *ngFor="let child of item.children">
+              <div 
+                class="menu-item-content submenu-content"
+                [class.active]="isActive(child)"
+                [class.has-children]="child.children && child.children.length > 0"
+                (click)="onMenuItemClick(child)"
+              >
+                <i [class]="child.icon || 'pi pi-angle-right'" class="menu-icon"></i>
+                <span class="menu-label">{{ child.label }}</span>
+                <i 
+                  *ngIf="child.children && child.children.length > 0"
+                  [class]="child.expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+                  class="expand-icon"
+                ></i>
+              </div>
+
+              <!-- Sub-menu Level 2 -->
+              <ul 
+                class="submenu submenu-level-2"
+                *ngIf="child.children && child.children.length > 0 && child.expanded"
+              >
+                <li class="submenu-item" *ngFor="let subChild of child.children">
+                  <div 
+                    class="menu-item-content submenu-content"
+                    [class.active]="isActive(subChild)"
+                    (click)="onMenuItemClick(subChild)"
+                  >
+                    <i [class]="subChild.icon || 'pi pi-angle-right'" class="menu-icon"></i>
+                    <span class="menu-label">{{ subChild.label }}</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+    </ul>
+  </nav>
+</div>
+

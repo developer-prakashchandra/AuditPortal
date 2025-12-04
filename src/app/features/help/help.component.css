@@ -1,0 +1,128 @@
+.help-container {
+  max-width: 900px;
+}
+
+:host ::ng-deep .help-card,
+:host ::ng-deep .contact-card,
+:host ::ng-deep .resources-card {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .help-card:hover,
+:host ::ng-deep .contact-card:hover,
+:host ::ng-deep .resources-card:hover {
+  box-shadow: 0 8px 20px rgba(65, 105, 225, 0.12);
+  transform: translateY(-4px);
+}
+
+.card-header {
+  padding: 20px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-card-header {
+  padding: 0;
+}
+
+:host ::ng-deep .p-card-body {
+  padding: 20px;
+}
+
+:host ::ng-deep .p-accordion-header-text {
+  font-weight: 500;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.contact-item:hover {
+  background-color: rgba(65, 105, 225, 0.05);
+  border-color: rgba(65, 105, 225, 0.1);
+  transform: translateX(4px);
+}
+
+.contact-item i {
+  font-size: 28px;
+  color: var(--primary-color);
+  margin-top: 2px;
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover i {
+  transform: scale(1.15) rotate(5deg);
+  color: var(--primary-dark);
+}
+
+.contact-item strong {
+  display: block;
+  color: var(--text-color);
+  margin-bottom: 5px;
+}
+
+.contact-item p {
+  margin: 0;
+  color: var(--text-light);
+}
+
+.resources-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.resources-list li {
+  padding: 15px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.resources-list li:last-child {
+  border-bottom: none;
+}
+
+.resources-list li:hover {
+  background-color: var(--background-color);
+}
+
+.resources-list i {
+  color: var(--primary-color);
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .help-container {
+    max-width: 100%;
+  }
+}
+

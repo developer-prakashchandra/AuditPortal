@@ -1,0 +1,21 @@
+<div class="audit-form-host">
+  <div class="loading-state" *ngIf="loading">
+    <p-progressSpinner></p-progressSpinner>
+    <p>Loading form...</p>
+  </div>
+
+  <div class="error-state" *ngIf="!loading && error">
+    <p>{{ error }}</p>
+  </div>
+
+  <ng-container *ngIf="!loading && !error">
+    <ng-container *ngIf="customComponent; else jsonDrivenForm">
+      <ng-container *ngComponentOutlet="customComponent"></ng-container>
+    </ng-container>
+
+    <ng-template #jsonDrivenForm>
+      <app-audit-forms-renderer></app-audit-forms-renderer>
+    </ng-template>
+  </ng-container>
+</div>
+

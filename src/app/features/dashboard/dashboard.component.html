@@ -1,0 +1,74 @@
+<div class="dashboard-container">
+  <h1 class="page-title">Dashboard</h1>
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let stat of stats">
+      <div class="stat-icon" [style.background-color]="stat.color">
+        <i [class]="'pi ' + stat.icon"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-value">{{ stat.value }}</h3>
+        <p class="stat-title">{{ stat.title }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activities -->
+  <div class="activities-section">
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <h2>Recent Activities</h2>
+        </div>
+      </ng-template>
+      
+      <div class="activities-list">
+        <div class="activity-item" *ngFor="let activity of recentActivities">
+          <div class="activity-icon" [style.color]="activity.color">
+            <i [class]="'pi ' + activity.icon"></i>
+          </div>
+          <div class="activity-content">
+            <p class="activity-title">{{ activity.title }}</p>
+            <small class="activity-time">{{ activity.time }}</small>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="card-header">
+          <h2>Quick Actions</h2>
+        </div>
+      </ng-template>
+      
+      <div class="actions-grid">
+        <p-button 
+          label="New Audit" 
+          icon="pi pi-plus" 
+          iconPos="left"
+          styleClass="new-audit-btn"
+          [rounded]="true"
+        ></p-button>
+        <p-button 
+          label="View Reports" 
+          icon="pi pi-chart-bar" 
+          iconPos="left"
+          styleClass="view-reports-btn"
+          [rounded]="true"
+        ></p-button>
+        <p-button 
+          label="Export Data" 
+          icon="pi pi-download" 
+          iconPos="left"
+          styleClass="export-data-btn"
+          [rounded]="true"
+        ></p-button>
+      </div>
+    </p-card>
+  </div>
+</div>
+

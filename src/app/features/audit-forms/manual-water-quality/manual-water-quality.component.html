@@ -1,0 +1,187 @@
+<div class="form-renderer-container">
+  <div class="form-header">
+    <p-button 
+      icon="pi pi-arrow-left" 
+      [text]="true"
+      label="Back"
+      (onClick)="goBack()"
+      styleClass="back-button"
+    ></p-button>
+  </div>
+
+  <h1 class="page-title">Manual Water Quality Snapshot</h1>
+  <p class="form-description">Custom audit form with bespoke validations not supported by JSON layouts.</p>
+
+  <div class="form-sections">
+    <p-card styleClass="section-card">
+      <ng-template pTemplate="header">
+        <div class="section-header">
+          <h2>Operator Information</h2>
+        </div>
+      </ng-template>
+
+      <form [formGroup]="operatorForm" class="card-form">
+        <div class="two-column">
+          <div class="form-field">
+            <label for="date">Date</label>
+            <p-calendar 
+              id="date"
+              formControlName="date"
+              dateFormat="dd MM yy"
+              appendTo="body"
+            ></p-calendar>
+          </div>
+
+          <div class="form-field">
+            <label for="shift">Shift</label>
+            <p-dropdown
+              id="shift"
+              formControlName="shift"
+              [options]="shiftOptions"
+              optionLabel="label"
+              optionValue="value"
+              appendTo="body"
+            ></p-dropdown>
+          </div>
+        </div>
+
+        <div class="two-column">
+          <div class="form-field">
+            <label for="operator">Operator Name</label>
+            <input 
+              id="operator"
+              type="text"
+              pInputText
+              formControlName="operator"
+            />
+          </div>
+
+          <div class="form-field">
+            <label for="employeeId">Employee ID</label>
+            <input 
+              id="employeeId"
+              type="text"
+              pInputText
+              formControlName="employeeId"
+            />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="remarks">Special Instructions</label>
+          <textarea 
+            id="remarks"
+            pInputTextarea
+            rows="3"
+            formControlName="remarks"
+            placeholder="Describe ad-hoc monitoring steps required for this shift."
+          ></textarea>
+        </div>
+      </form>
+    </p-card>
+
+    <p-card styleClass="section-card">
+      <ng-template pTemplate="header">
+        <div class="section-header">
+          <h2>Water Quality & Equipment Snapshot</h2>
+        </div>
+      </ng-template>
+
+      <form [formGroup]="analysisForm" class="card-form">
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <label for="conductivity">Conductivity (µS/cm)</label>
+            <p-inputNumber
+              id="conductivity"
+              formControlName="conductivity"
+              [min]="0"
+              [mode]="'decimal'"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+            ></p-inputNumber>
+          </div>
+
+          <div class="metric-card">
+            <label for="ph">pH Level</label>
+            <p-inputNumber
+              id="ph"
+              formControlName="ph"
+              [min]="0"
+              [max]="14"
+              [mode]="'decimal'"
+              [minFractionDigits]="1"
+              [maxFractionDigits]="2"
+            ></p-inputNumber>
+          </div>
+
+          <div class="metric-card">
+            <label for="silica">Silica (ppm)</label>
+            <p-inputNumber
+              id="silica"
+              formControlName="silica"
+              [min]="0"
+              [mode]="'decimal'"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="3"
+            ></p-inputNumber>
+          </div>
+        </div>
+
+        <div class="status-grid">
+          <div class="status-field">
+            <label for="degasifier">Degasifier Status</label>
+            <p-dropdown
+              id="degasifier"
+              formControlName="degasifier"
+              [options]="statusOptions"
+              optionLabel="label"
+              optionValue="value"
+              appendTo="body"
+            ></p-dropdown>
+          </div>
+
+          <div class="status-field">
+            <label for="mixedBed">Mixed Bed Status</label>
+            <p-dropdown
+              id="mixedBed"
+              formControlName="mixedBed"
+              [options]="statusOptions"
+              optionLabel="label"
+              optionValue="value"
+              appendTo="body"
+            ></p-dropdown>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="comments">Equipment Notes</label>
+          <textarea 
+            id="comments"
+            pInputTextarea
+            rows="4"
+            formControlName="comments"
+            placeholder="Document alarms, manual interventions, or temp bypasses."
+          ></textarea>
+        </div>
+      </form>
+    </p-card>
+  </div>
+
+  <!-- Form Actions -->
+  <div class="form-actions">
+    <p-button
+      label="Cancel"
+      icon="pi pi-times"
+      (onClick)="cancel()"
+      styleClass="cancel-button"
+    ></p-button>
+    <p-button
+      label="Submit"
+      icon="pi pi-check"
+      iconPos="right"
+      (onClick)="submit()"
+      styleClass="submit-button"
+    ></p-button>
+  </div>
+</div>
+

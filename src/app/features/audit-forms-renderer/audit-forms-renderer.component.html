@@ -1,0 +1,509 @@
+<div class="form-renderer-container">
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <p-progressSpinner></p-progressSpinner>
+    <p>Loading audit form...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error && !loading">
+    <p-message severity="error" [text]="error"></p-message>
+    <p-button label="Go Back" icon="pi pi-arrow-left" (onClick)="goBack()"></p-button>
+  </div>
+
+  <!-- Form Content -->
+  <div *ngIf="auditForm && !loading && !error">
+    <div class="form-header">
+      <p-button 
+        icon="pi pi-arrow-left" 
+        [text]="true"
+        label="Back"
+        (onClick)="goBack()"
+        styleClass="back-button"
+      ></p-button>
+    </div>
+
+    <h1 class="page-title">{{ auditForm.title }}</h1>
+    <p class="form-description" *ngIf="auditForm.description">{{ auditForm.description }}</p>
+
+    <!-- Form Sections -->
+    <div class="form-sections">
+      <p-card *ngFor="let section of auditForm.sections" styleClass="section-card">
+        <ng-template pTemplate="header">
+          <div class="section-header">
+            <h2>{{ section.title }}</h2>
+          </div>
+        </ng-template>
+        <!-- Columns Layout (1, 2, 3, 4+ columns) -->
+        <form [formGroup]="getFormGroup(section.title)" *ngIf="!section.layout || section.layout === 'columns'">
+          <div class="form-grid" [ngClass]="'columns-' + (section.columns || 2)">
+            <div class="form-field" *ngFor="let field of section.fields">
+              <label [for]="field.name">
+                {{ field.label }}
+                <span class="required-mark" *ngIf="field.required">*</span>
+              </label>
+
+              <!-- Text Input -->
+              <input 
+                *ngIf="field.type === 'text' || field.type === 'email' || field.type === 'tel' || field.type === 'url' || field.type === 'password'"
+                [id]="field.name"
+                [type]="field.type"
+                pInputText
+                [formControlName]="field.name"
+                [placeholder]="field.placeholder || ''"
+                [readonly]="field.readonly || false"
+                [class.ng-invalid]="isFieldInvalid(section, field)"
+              />
+
+              <!-- Number Input -->
+              <p-inputNumber 
+                *ngIf="field.type === 'number'"
+                [inputId]="field.name"
+                [formControlName]="field.name"
+                [placeholder]="field.placeholder || ''"
+                styleClass="w-full"
+              ></p-inputNumber>
+
+              <!-- Textarea -->
+              <textarea 
+                *ngIf="field.type === 'textarea'"
+                [id]="field.name"
+                pInputTextarea
+                [formControlName]="field.name"
+                [placeholder]="field.placeholder || ''"
+                [rows]="field.rows || 3"
+                [class.ng-invalid]="isFieldInvalid(section, field)"
+              ></textarea>
+
+              <!-- Select Dropdown -->
+              <p-dropdown 
+                *ngIf="field.type === 'select' || field.type === 'dropdown'"
+                [inputId]="field.name"
+                [formControlName]="field.name"
+                [options]="field.options || []"
+                optionLabel="label"
+                optionValue="value"
+                [placeholder]="field.placeholder || 'Select an option'"
+                appendTo="body"
+                styleClass="w-full"
+              ></p-dropdown>
+
+              <!-- Checkbox -->
+              <div *ngIf="field.type === 'checkbox'" class="checkbox-field">
+                <p-checkbox 
+                  [inputId]="field.name"
+                  [formControlName]="field.name"
+                  [binary]="true"
+                ></p-checkbox>
+              </div>
+
+              <!-- Radio Buttons -->
+              <div *ngIf="field.type === 'radio'" class="radio-group">
+                <div *ngFor="let option of field.options" class="radio-option">
+                  <p-radioButton 
+                    [inputId]="field.name + '_' + option.value"
+                    [name]="field.name"
+                    [value]="option.value"
+                    [formControlName]="field.name"
+                  ></p-radioButton>
+                  <label [for]="field.name + '_' + option.value">{{ option.label }}</label>
+                </div>
+              </div>
+
+              <!-- Date Input -->
+              <p-calendar 
+                *ngIf="field.type === 'date'"
+                [inputId]="field.name"
+                [formControlName]="field.name"
+                dateFormat="yy-mm-dd"
+                [showIcon]="true"
+                appendTo="body"
+                styleClass="w-full"
+              ></p-calendar>
+
+              <!-- Time Input -->
+              <p-calendar 
+                *ngIf="field.type === 'time'"
+                [inputId]="field.name"
+                [formControlName]="field.name"
+                [timeOnly]="true"
+                [showIcon]="true"
+                appendTo="body"
+                styleClass="w-full"
+              ></p-calendar>
+
+              <!-- Field Hint -->
+              <small class="help-text" *ngIf="(field.hint || field.helpText) && !isFieldInvalid(section, field)">
+                {{ field.hint || field.helpText }}
+              </small>
+
+              <!-- Error Message -->
+              <small class="error-message" *ngIf="isFieldInvalid(section, field)">
+                {{ getFieldError(section, field) }}
+              </small>
+            </div>
+          </div>
+        </form>
+
+        <!-- Rows Layout (Table with row headers) -->
+        <form [formGroup]="getFormGroup(section.title)" *ngIf="section.layout === 'rows'">
+          <div class="rows-table-container">
+            <table class="rows-table">
+              <thead>
+                <tr>
+                  <th class="field-header-col">Field</th>
+                  <th *ngFor="let header of section.rowHeaders" class="row-header-col">{{ header }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let group of section.fieldGroups">
+                  <!-- Group Title Row -->
+                  <tr class="group-title-row" *ngIf="group.groupTitle">
+                    <td [attr.colspan]="(section.rowHeaders?.length || 0) + 1" class="group-title">
+                      {{ group.groupTitle }}
+                    </td>
+                  </tr>
+                  
+                  <!-- Field Rows -->
+                  <tr *ngFor="let field of group.fields">
+                    <!-- Field Label Column -->
+                    <td class="field-label-cell">
+                      {{ field.label }}
+                      <span class="required-mark" *ngIf="field.required">*</span>
+                    </td>
+                    
+                    <!-- Data Cells (one for each row header) -->
+                    <td class="row-data-cell" *ngFor="let header of section.rowHeaders">
+                      <ng-container [ngSwitch]="field.type">
+                        <!-- Text Input -->
+                        <input 
+                          *ngSwitchCase="'text'"
+                          type="text"
+                          pInputText
+                          [formControlName]="header + '_' + field.name"
+                          [placeholder]="field.placeholder || ''"
+                          [readonly]="field.readonly || false"
+                        />
+                        
+                        <!-- Email Input -->
+                        <input 
+                          *ngSwitchCase="'email'"
+                          type="email"
+                          pInputText
+                          [formControlName]="header + '_' + field.name"
+                          [placeholder]="field.placeholder || ''"
+                          [readonly]="field.readonly || false"
+                        />
+                        
+                        <!-- Phone Input -->
+                        <input 
+                          *ngSwitchCase="'tel'"
+                          type="tel"
+                          pInputText
+                          [formControlName]="header + '_' + field.name"
+                          [placeholder]="field.placeholder || ''"
+                          [readonly]="field.readonly || false"
+                        />
+                        
+                        <!-- URL Input -->
+                        <input 
+                          *ngSwitchCase="'url'"
+                          type="url"
+                          pInputText
+                          [formControlName]="header + '_' + field.name"
+                          [placeholder]="field.placeholder || ''"
+                          [readonly]="field.readonly || false"
+                        />
+                        
+                        <!-- Password Input -->
+                        <input 
+                          *ngSwitchCase="'password'"
+                          type="password"
+                          pInputText
+                          [formControlName]="header + '_' + field.name"
+                          [placeholder]="field.placeholder || ''"
+                          [readonly]="field.readonly || false"
+                        />
+                        
+                        <!-- Number Input -->
+                        <p-inputNumber 
+                          *ngSwitchCase="'number'"
+                          [formControlName]="header + '_' + field.name"
+                          [placeholder]="field.placeholder || ''"
+                          styleClass="w-full"
+                        ></p-inputNumber>
+                        
+                        <!-- Textarea -->
+                        <textarea 
+                          *ngSwitchCase="'textarea'"
+                          pInputTextarea
+                          [formControlName]="header + '_' + field.name"
+                          [placeholder]="field.placeholder || ''"
+                          [rows]="field.rows || 2"
+                          [readonly]="field.readonly || false"
+                        ></textarea>
+                        
+                        <!-- Select Dropdown -->
+                        <p-dropdown 
+                          *ngSwitchCase="'select'"
+                          [formControlName]="header + '_' + field.name"
+                          [options]="field.options || []"
+                          optionLabel="label"
+                          optionValue="value"
+                          [placeholder]="field.placeholder || 'Select'"
+                          appendTo="body"
+                          styleClass="w-full"
+                        ></p-dropdown>
+                        
+                        <!-- Dropdown (alternative name) -->
+                        <p-dropdown 
+                          *ngSwitchCase="'dropdown'"
+                          [formControlName]="header + '_' + field.name"
+                          [options]="field.options || []"
+                          optionLabel="label"
+                          optionValue="value"
+                          [placeholder]="field.placeholder || 'Select'"
+                          appendTo="body"
+                          styleClass="w-full"
+                        ></p-dropdown>
+                        
+                        <!-- Date Input -->
+                        <p-calendar 
+                          *ngSwitchCase="'date'"
+                          [formControlName]="header + '_' + field.name"
+                          dateFormat="yy-mm-dd"
+                          [showIcon]="true"
+                          appendTo="body"
+                          styleClass="w-full"
+                        ></p-calendar>
+                        
+                        <!-- Time Input -->
+                        <p-calendar 
+                          *ngSwitchCase="'time'"
+                          [formControlName]="header + '_' + field.name"
+                          [timeOnly]="true"
+                          [showIcon]="true"
+                          appendTo="body"
+                          styleClass="w-full"
+                        ></p-calendar>
+                      </ng-container>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </form>
+
+        <!-- Dynamic-Rows Layout (Add/Remove rows dynamically) -->
+        <form [formGroup]="getFormGroup(section.title)" *ngIf="section.layout === 'dynamic-rows'">
+          <div class="dynamic-rows-container">
+            <!-- Action Buttons -->
+            <div class="dynamic-rows-actions">
+              <div class="actions-left">
+                <p-button 
+                  label="Add Row" 
+                  icon="pi pi-plus" 
+                  severity="success"
+                  [outlined]="true"
+                  (onClick)="addDynamicRow(section)"
+                  [disabled]="!canAddRow(section)"
+                  styleClass="add-row-btn"
+                  pTooltip="Add a new row to the table"
+                  tooltipPosition="top"
+                ></p-button>
+              </div>
+              <div class="actions-right">
+                <span class="row-count-info">
+                  <i class="pi pi-table"></i>
+                  {{ getDynamicRowsCount(section.title) }} / {{ section.maxRows || 50 }} rows
+                </span>
+              </div>
+            </div>
+
+            <!-- Dynamic Rows Table -->
+            <table class="dynamic-rows-table">
+              <thead>
+                <tr>
+                  <th class="row-number-col">#</th>
+                  <th *ngFor="let field of section.fields" class="field-col">
+                    {{ field.label }}
+                    <span class="required-mark" *ngIf="field.required">*</span>
+                  </th>
+                  <th class="action-col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let rowIndex of getDynamicRowIndices(section.title)" class="dynamic-row">
+                  <!-- Row Number -->
+                  <td class="row-number-cell">{{ rowIndex + 1 }}</td>
+                  
+                  <!-- Field Cells -->
+                  <td *ngFor="let field of section.fields" class="field-cell">
+                    <ng-container [ngSwitch]="field.type">
+                      <!-- Text Input -->
+                      <input 
+                        *ngSwitchCase="'text'"
+                        type="text"
+                        pInputText
+                        [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                        [placeholder]="field.placeholder || ''"
+                        [readonly]="field.readonly || false"
+                      />
+                      
+                      <!-- Email Input -->
+                      <input 
+                        *ngSwitchCase="'email'"
+                        type="email"
+                        pInputText
+                        [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                        [placeholder]="field.placeholder || ''"
+                        [readonly]="field.readonly || false"
+                      />
+                      
+                      <!-- Phone Input -->
+                      <input 
+                        *ngSwitchCase="'tel'"
+                        type="tel"
+                        pInputText
+                        [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                        [placeholder]="field.placeholder || ''"
+                        [readonly]="field.readonly || false"
+                      />
+                      
+                      <!-- URL Input -->
+                      <input 
+                        *ngSwitchCase="'url'"
+                        type="url"
+                        pInputText
+                        [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                        [placeholder]="field.placeholder || ''"
+                        [readonly]="field.readonly || false"
+                      />
+                      
+                      <!-- Password Input -->
+                      <input 
+                        *ngSwitchCase="'password'"
+                        type="password"
+                        pInputText
+                        [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                        [placeholder]="field.placeholder || ''"
+                        [readonly]="field.readonly || false"
+                      />
+                      
+                      <!-- Number Input -->
+                      <p-inputNumber 
+                        *ngSwitchCase="'number'"
+                        [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                        [placeholder]="field.placeholder || ''"
+                        styleClass="w-full"
+                      ></p-inputNumber>
+                      
+                      <!-- Textarea -->
+                      <textarea 
+                        *ngSwitchCase="'textarea'"
+                        pInputTextarea
+                        [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                        [placeholder]="field.placeholder || ''"
+                        [rows]="field.rows || 2"
+                        [readonly]="field.readonly || false"
+                      ></textarea>
+                      
+                      <!-- Select Dropdown -->
+                      <p-dropdown 
+                        *ngSwitchCase="'select'"
+                        [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                        [options]="field.options || []"
+                        optionLabel="label"
+                        optionValue="value"
+                        [placeholder]="field.placeholder || 'Select'"
+                        appendTo="body"
+                        styleClass="w-full"
+                      ></p-dropdown>
+                      
+                      <!-- Dropdown (alternative name) -->
+                      <p-dropdown 
+                        *ngSwitchCase="'dropdown'"
+                        [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                        [options]="field.options || []"
+                        optionLabel="label"
+                        optionValue="value"
+                        [placeholder]="field.placeholder || 'Select'"
+                        appendTo="body"
+                        styleClass="w-full"
+                      ></p-dropdown>
+                      
+                      <!-- Date Input -->
+                      <p-calendar 
+                        *ngSwitchCase="'date'"
+                        [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                        dateFormat="yy-mm-dd"
+                        [showIcon]="true"
+                        appendTo="body"
+                        styleClass="w-full"
+                      ></p-calendar>
+                      
+                      <!-- Time Input -->
+                      <p-calendar 
+                        *ngSwitchCase="'time'"
+                        [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                        [timeOnly]="true"
+                        [showIcon]="true"
+                        appendTo="body"
+                        styleClass="w-full"
+                      ></p-calendar>
+
+                      <!-- Checkbox -->
+                      <div *ngSwitchCase="'checkbox'" class="checkbox-center">
+                        <p-checkbox 
+                          [formControlName]="getDynamicFieldName(rowIndex, field.name)"
+                          [binary]="true"
+                        ></p-checkbox>
+                      </div>
+                    </ng-container>
+                  </td>
+
+                  <!-- Row Remove Button -->
+                  <td class="action-cell">
+                    <p-button 
+                      icon="pi pi-trash" 
+                      severity="danger"
+                      [outlined]="true"
+                      [rounded]="true"
+                      size="small"
+                      (onClick)="removeDynamicRow(section, rowIndex)"
+                      [disabled]="!canRemoveRow(section)"
+                      styleClass="remove-row-btn"
+                      pTooltip="Remove row #{{ rowIndex + 1 }}"
+                      tooltipPosition="left"
+                    ></p-button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </p-card>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <p-button 
+        label="Cancel"
+        icon="pi pi-times"
+        severity="secondary"
+        (onClick)="goBack()"
+        styleClass="cancel-button"
+        [rounded]="true"
+      ></p-button>
+      <p-button 
+        label="Submit Audit"
+        icon="pi pi-check-circle"
+        iconPos="right"
+        (onClick)="onSubmit()"
+        styleClass="submit-button"
+        [rounded]="true"
+      ></p-button>
+    </div>
+  </div>
+</div>

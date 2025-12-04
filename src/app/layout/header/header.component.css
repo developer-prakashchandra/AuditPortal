@@ -1,0 +1,308 @@
+:host {
+  display: block;
+  height: var(--header-height);
+}
+
+:host ::ng-deep .header-toolbar {
+  height: var(--header-height);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: 0;
+  padding: 0 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+:host ::ng-deep .header-toolbar .p-toolbar-group-start,
+:host ::ng-deep .header-toolbar .p-toolbar-group-center,
+:host ::ng-deep .header-toolbar .p-toolbar-group-end {
+  display: flex;
+  align-items: center;
+}
+
+:host ::ng-deep .header-toolbar .p-toolbar-group-start {
+  flex: 0 0 var(--sidebar-width);
+  width: var(--sidebar-width);
+  justify-content: flex-start;
+  gap: 15px;
+}
+
+:host ::ng-deep .header-toolbar .p-toolbar-group-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+:host ::ng-deep .header-toolbar .p-toolbar-group-end {
+  flex: 1;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-left: auto;
+}
+
+.menu-toggle-btn {
+  color: white !important;
+}
+
+:host ::ng-deep .menu-toggle-btn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host ::ng-deep .menu-toggle-btn .p-button-icon {
+  font-size: 20px;
+}
+
+/* Logo positioned on left - matches sidebar width */
+.app-logo {
+  height: 48px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-left: 12px;
+}
+
+.app-logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
+}
+
+/* SVG Logo Styling */
+:host ::ng-deep svg {
+  height: 48px;
+  width: auto;
+  max-width: 180px;
+  cursor: pointer;
+  margin-left: 12px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep svg:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
+}
+
+:host ::ng-deep svg .bottom-part {
+  fill: rgba(255, 255, 255, 0.9);
+  transition: fill 0.3s ease;
+}
+
+:host ::ng-deep svg .top-part {
+  fill: rgba(255, 255, 255, 0.75);
+  transition: fill 0.3s ease;
+}
+
+:host ::ng-deep svg .brandtype path {
+  fill: white;
+  transition: fill 0.3s ease;
+}
+
+:host ::ng-deep svg:hover .bottom-part {
+  fill: white;
+}
+
+:host ::ng-deep svg:hover .top-part {
+  fill: rgba(255, 255, 255, 0.95);
+}
+
+:host ::ng-deep svg:hover .brandtype path {
+  fill: white;
+}
+
+/* Centered brand text */
+.brand-text-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.2;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.brand-text-center:hover {
+  transform: translateY(-1px);
+}
+
+.app-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.95) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app-tagline {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+
+.user-name {
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep .p-button {
+  color: white;
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .p-button:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+:host ::ng-deep .p-button:active {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  transform: scale(0.98);
+}
+
+/* Enhanced User Menu Styling */
+:host ::ng-deep .p-menu.p-menu-overlay {
+  min-width: 200px;
+  margin-top: 8px;
+}
+
+:host ::ng-deep .p-menu .p-menuitem-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+:host ::ng-deep .p-menu .p-menuitem-icon {
+  font-size: 18px;
+  width: 20px;
+}
+
+:host ::ng-deep .p-menu .p-menuitem-text {
+  flex: 1;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  :host ::ng-deep .header-toolbar {
+    padding: 0 10px;
+  }
+  
+  :host ::ng-deep .header-toolbar .p-toolbar-group-start {
+    flex: 0 0 auto;
+    width: auto;
+    gap: 10px;
+  }
+  
+  :host ::ng-deep .header-toolbar .p-toolbar-group-center {
+    position: static;
+    transform: none;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .app-logo,
+  :host ::ng-deep svg {
+    height: 36px;
+    margin-left: 8px;
+    max-width: 140px;
+  }
+  
+  .app-name {
+    font-size: 18px;
+  }
+  
+  .app-tagline {
+    font-size: 10px;
+    letter-spacing: 0.8px;
+  }
+  
+  .user-name {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  :host ::ng-deep .header-toolbar .p-toolbar-group-start {
+    flex: 0 0 auto;
+    gap: 8px;
+  }
+  
+  .brand-text-center {
+    gap: 2px;
+  }
+  
+  .app-logo,
+  :host ::ng-deep svg {
+    height: 32px;
+    margin-left: 4px;
+    max-width: 100px;
+  }
+  
+  .app-name {
+    font-size: 16px;
+    letter-spacing: 0.3px;
+  }
+  
+  .app-tagline {
+    display: none;
+  }
+}
+
+/* Logo Animation on Load */
+@keyframes logoFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.app-logo,
+:host ::ng-deep svg {
+  animation: logoFadeIn 0.5s ease;
+}
+
+/* Additional Hover Effects */
+:host ::ng-deep .p-button-icon {
+  transition: transform 0.3s ease;
+}
+
+:host ::ng-deep .p-button:hover .p-button-icon {
+  transform: rotate(90deg);
+}
+
+:host ::ng-deep .menu-toggle-btn:hover .p-button-icon {
+  transform: scale(1.1) rotate(0deg);
+}
+

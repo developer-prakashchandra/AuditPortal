@@ -1,0 +1,136 @@
+.breadcrumb-container {
+  background: white;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:host ::ng-deep .custom-breadcrumb {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+:host ::ng-deep .custom-breadcrumb .p-breadcrumb-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+:host ::ng-deep .custom-breadcrumb .p-menuitem {
+  display: flex;
+  align-items: center;
+}
+
+:host ::ng-deep .custom-breadcrumb .p-menuitem-link {
+  color: var(--text-light);
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+:host ::ng-deep .custom-breadcrumb .p-menuitem-link:hover {
+  background-color: rgba(65, 105, 225, 0.08);
+  color: var(--primary-color);
+  transform: translateX(2px);
+}
+
+:host ::ng-deep .custom-breadcrumb .p-menuitem-link .p-menuitem-icon {
+  font-size: 16px;
+  color: var(--primary-color);
+}
+
+:host ::ng-deep .custom-breadcrumb .p-menuitem-link .p-menuitem-text {
+  color: inherit;
+}
+
+:host ::ng-deep .custom-breadcrumb .p-menuitem-separator {
+  color: var(--text-light);
+  margin: 0 4px;
+  font-size: 12px;
+}
+
+:host ::ng-deep .custom-breadcrumb .p-breadcrumb-chevron {
+  color: var(--text-light);
+  font-size: 12px;
+  margin: 0 4px;
+}
+
+/* Last breadcrumb (current page) */
+:host ::ng-deep .custom-breadcrumb .p-menuitem:last-child .p-menuitem-link {
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: default;
+  pointer-events: none;
+}
+
+:host ::ng-deep .custom-breadcrumb .p-menuitem:last-child .p-menuitem-link:hover {
+  background-color: transparent;
+  transform: none;
+}
+
+/* Home icon styling */
+:host ::ng-deep .custom-breadcrumb .p-menuitem-icon.pi-home {
+  font-size: 16px;
+  color: var(--primary-color);
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .custom-breadcrumb .p-menuitem-link:hover .p-menuitem-icon.pi-home {
+  transform: scale(1.1);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .breadcrumb-container {
+    padding: 10px 15px;
+  }
+  
+  :host ::ng-deep .custom-breadcrumb .p-menuitem-link {
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+  
+  :host ::ng-deep .custom-breadcrumb .p-menuitem-separator,
+  :host ::ng-deep .custom-breadcrumb .p-breadcrumb-chevron {
+    margin: 0 2px;
+  }
+}
+
+@media (max-width: 576px) {
+  .breadcrumb-container {
+    padding: 8px 10px;
+  }
+  
+  :host ::ng-deep .custom-breadcrumb .p-menuitem-link {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
+  
+  :host ::ng-deep .custom-breadcrumb .p-menuitem-text {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+

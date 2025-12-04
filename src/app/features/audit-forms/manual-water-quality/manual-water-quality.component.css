@@ -1,0 +1,126 @@
+/* Import common audit forms styles */
+@import '../shared/audit-forms-common.css';
+
+/* ===================================================================
+   MANUAL WATER QUALITY FORM SPECIFIC STYLES
+   Physical component-specific layout and card styling
+   =================================================================== */
+
+/* Card Form Layout */
+.card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.metric-card {
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  background: rgba(0, 74, 124, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.metric-card:hover {
+  background: rgba(0, 74, 124, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.metric-card label {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-color);
+}
+
+/* Status Grid */
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.status-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.status-field label {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+/* PrimeNG Component Overrides */
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-inputnumber input,
+:host ::ng-deep .p-dropdown,
+:host ::ng-deep .p-calendar input,
+:host ::ng-deep .p-inputtextarea {
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .p-inputtext:focus,
+:host ::ng-deep .p-inputnumber input:focus,
+:host ::ng-deep .p-calendar input:focus,
+:host ::ng-deep .p-inputtextarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1);
+}
+
+/* Page Title */
+.page-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .two-column {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header h2 {
+    font-size: 18px;
+  }
+
+  .metric-card {
+    padding: 12px;
+  }
+}

@@ -1,0 +1,485 @@
+================================================================================
+                    AUDIT FORM LAYOUTS GUIDE
+================================================================================
+
+This guide explains the different layout types available for audit form sections
+and how to use them in your JSON form definitions.
+
+================================================================================
+1. DEFAULT LAYOUT (Single Column)
+================================================================================
+
+DESCRIPTION:
+Simple single-column layout where fields stack vertically one below another.
+Best for: Forms with few fields, focused data entry, mobile-first designs.
+
+USAGE:
+{
+  "title": "Personal Information",
+  "layout": "default",  // or omit layout property
+  "fields": [
+    {
+      "name": "fullName",
+      "label": "Full Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "name": "email",
+      "label": "Email",
+      "type": "email",
+      "required": true
+    }
+  ]
+}
+
+FEATURES:
+- ✓ Clean, simple, easy to read
+- ✓ Mobile-friendly by default
+- ✓ Max width of 800px for better readability
+- ✓ 20px gap between fields
+- ✓ Full-width input controls
+
+================================================================================
+2. MULTI-COLUMNS LAYOUT (2, 3, 4+ Columns)
+================================================================================
+
+DESCRIPTION:
+Flexible grid layout with configurable number of columns.
+Best for: Forms with many fields, grouping related data, desktop layouts.
+
+USAGE:
+{
+  "title": "Contact Details",
+  "layout": "multi-columns",
+  "columns": 2,  // 2, 3, or 4 columns
+  "fields": [
+    {
+      "name": "firstName",
+      "label": "First Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "name": "lastName",
+      "label": "Last Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "name": "phone",
+      "label": "Phone",
+      "type": "text",
+      "required": true
+    },
+    {
+      "name": "email",
+      "label": "Email",
+      "type": "email",
+      "required": true
+    }
+  ]
+}
+
+COLUMN OPTIONS:
+- columns: 2  → 2-column grid (min width: 300px per column)
+- columns: 3  → 3-column grid (min width: 250px per column)
+- columns: 4  → 4-column grid (min width: 200px per column)
+
+FEATURES:
+- ✓ Responsive grid with auto-fit
+- ✓ Adjusts based on screen size
+- ✓ 20px gap between columns and rows
+- ✓ Automatic wrapping on smaller screens
+
+RESPONSIVE BEHAVIOR:
+- Desktop: Shows configured number of columns
+- Tablet: May reduce to 2 columns depending on screen size
+- Mobile (< 768px): Always collapses to 1 column
+
+================================================================================
+3. MULTI-ROWS LAYOUT (Table with Row Headers)
+================================================================================
+
+DESCRIPTION:
+Table-based layout with row headers (field labels) on the left and multiple
+data columns for different categories, times, or groups.
+Best for: Time-series data, multiple readings, comparative data entry.
+
+USAGE:
+{
+  "title": "Hourly Equipment Readings",
+  "layout": "multi-rows",
+  "rowHeaders": ["08:00", "12:00", "16:00", "20:00"],
+  "fieldGroups": [
+    {
+      "groupTitle": "Temperature & Pressure",
+      "fields": [
+        {
+          "name": "temperature",
+          "label": "Temperature (°C)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "pressure",
+          "label": "Pressure (Bar)",
+          "type": "number",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
+
+STRUCTURE:
+- rowHeaders: Array of column headers (e.g., times, locations, categories)
+- fieldGroups: Array of field groups (each group can have multiple fields)
+- Creates fields named: {rowHeader}_{fieldName} (e.g., "08:00_temperature")
+
+TABLE LAYOUT:
+┌─────────────────────┬──────────┬──────────┬──────────┬──────────┐
+│ Item                │  08:00   │  12:00   │  16:00   │  20:00   │
+├─────────────────────┼──────────┼──────────┼──────────┼──────────┤
+│ Temperature (°C)    │  [input] │  [input] │  [input] │  [input] │
+│ Pressure (Bar)      │  [input] │  [input] │  [input] │  [input] │
+└─────────────────────┴──────────┴──────────┴──────────┴──────────┘
+
+FEATURES:
+- ✓ Sticky first column (row headers) for easy reference
+- ✓ Horizontal scrolling for many columns
+- ✓ Hover effect on rows
+- ✓ Consistent cell sizing (180px min width per data column)
+- ✓ Professional table styling with borders
+
+USE CASES:
+- Hourly/time-based readings
+- Location-based data
+- Category comparisons
+- Multiple samples/tests
+
+================================================================================
+4. SHIFT-COLUMNS LAYOUT (Shift-Based Data Entry)
+================================================================================
+
+DESCRIPTION:
+Special table layout for shift-based operations (e.g., Shift-A, Shift-B).
+Similar to multi-rows but specifically designed for shift operations.
+Best for: Manufacturing, operations, 24/7 facilities with shift rotations.
+
+USAGE:
+{
+  "title": "Production Data",
+  "layout": "shift-columns",
+  "shiftColumns": ["Shift-A", "Shift-B"],
+  "fieldGroups": [
+    {
+      "groupTitle": "Production Metrics",
+      "fields": [
+        {
+          "name": "output",
+          "label": "Output (Units)",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "quality",
+          "label": "Quality Score",
+          "type": "number",
+          "required": true
+        }
+      ]
+    },
+    {
+      "groupTitle": "Operator Information",
+      "fields": [
+        {
+          "name": "operatorName",
+          "label": "Operator Name",
+          "type": "text",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
+
+STRUCTURE:
+- shiftColumns: Array of shift names (e.g., ["Shift-A", "Shift-B"])
+- fieldGroups: Array of field groups with groupTitle
+- Creates fields named: shiftA_{fieldName}, shiftB_{fieldName}
+
+TABLE LAYOUT:
+┌─────────────────────┬────────────────┬────────────────┐
+│ Field               │    Shift-A     │    Shift-B     │
+├─────────────────────┼────────────────┼────────────────┤
+│ Production Metrics                                    │
+├─────────────────────┼────────────────┼────────────────┤
+│ Output (Units)      │     [input]    │     [input]    │
+│ Quality Score       │     [input]    │     [input]    │
+├─────────────────────┼────────────────┼────────────────┤
+│ Operator Information                                  │
+├─────────────────────┼────────────────┼────────────────┤
+│ Operator Name       │     [input]    │     [input]    │
+└─────────────────────┴────────────────┴────────────────┘
+
+FEATURES:
+- ✓ Group titles with colspan across all shift columns
+- ✓ Clear visual separation between groups
+- ✓ Shift-specific validation (Shift-A always required)
+- ✓ Conditional validation for Shift-B
+- ✓ Professional shift operation styling
+
+SPECIAL FEATURES:
+- Shift-A fields: Always required
+- Shift-B operatorName: Required only if Shift-A is filled
+- Readonly fields: Supports operator auto-fill
+
+================================================================================
+5. DYNAMIC-ROWS LAYOUT (Add/Remove Rows Dynamically)
+================================================================================
+
+DESCRIPTION:
+Interactive table layout where users can dynamically add or remove rows.
+Each row contains the same set of fields. Perfect for line items and lists.
+Best for: Purchase orders, invoices, inventory items, task lists, expenses.
+
+USAGE:
+{
+  "title": "Order Line Items",
+  "layout": "dynamic-rows",
+  "minRows": 1,
+  "maxRows": 10,
+  "initialRows": 2,
+  "fields": [
+    {
+      "name": "itemCode",
+      "label": "Item Code",
+      "type": "text",
+      "required": true
+    },
+    {
+      "name": "quantity",
+      "label": "Quantity",
+      "type": "number",
+      "required": true
+    },
+    {
+      "name": "unitPrice",
+      "label": "Unit Price",
+      "type": "number",
+      "required": true
+    }
+  ]
+}
+
+STRUCTURE:
+- minRows: Minimum number of rows (default: 1)
+- maxRows: Maximum number of rows (default: 50)
+- initialRows: Initial number of rows displayed (default: minRows)
+- fields: Array of fields (same fields repeated in each row)
+- Creates fields named: row0_{fieldName}, row1_{fieldName}, etc.
+
+TABLE LAYOUT:
+┌─────┬──────────────┬──────────┬─────────────┐
+│  #  │  Item Code   │ Quantity │ Unit Price  │
+├─────┼──────────────┼──────────┼─────────────┤
+│  1  │   [input]    │  [input] │   [input]   │
+│  2  │   [input]    │  [input] │   [input]   │
+└─────┴──────────────┴──────────┴─────────────┘
+
+ACTION BUTTONS:
+┌──────────────┬────────────────┬─────────────────┐
+│  [+ Add Row] │ [- Remove Row] │   2 / 10 rows   │
+└──────────────┴────────────────┴─────────────────┘
+
+FEATURES:
+- ✓ Dynamic add/remove buttons above table
+- ✓ Row counter showing current/max rows
+- ✓ Automatic row numbering (#)
+- ✓ Smooth animations when adding/removing rows
+- ✓ Add button disabled when at max rows
+- ✓ Remove button disabled when at min rows
+- ✓ Validation per row
+- ✓ Professional table styling
+
+CONTROLS:
+- Add Row button: Adds a new row at the bottom
+- Remove Row button: Removes the last row
+- Row counter: Shows current count and maximum allowed
+
+USE CASES:
+- Purchase order line items
+- Invoice items
+- Expense reports with multiple entries
+- Inventory lists
+- Task lists with multiple tasks
+- Materials requisition
+- Equipment checkout lists
+- Multiple address entries
+
+CONFIGURATION OPTIONS:
+
+minRows (optional):
+- Default: 1
+- Minimum number of rows that must exist
+- Remove button disabled when at this limit
+- Example: minRows: 1 (at least 1 row required)
+
+maxRows (optional):
+- Default: 50
+- Maximum number of rows allowed
+- Add button disabled when at this limit
+- Example: maxRows: 20 (up to 20 rows allowed)
+
+initialRows (optional):
+- Default: minRows value
+- Number of rows displayed initially
+- Must be >= minRows and <= maxRows
+- Example: initialRows: 3 (starts with 3 rows)
+
+VALIDATION:
+- Each row validates independently
+- Required fields marked with red asterisk
+- Invalid fields show red border
+- Form won't submit if any row has validation errors
+
+BEST PRACTICES:
+1. Set reasonable maxRows (10-50 depending on use case)
+2. Use minRows: 1 for most cases
+3. Set initialRows to typical usage (e.g., 2-3 rows)
+4. Keep number of fields per row manageable (3-8 fields)
+5. Use clear, concise field labels
+6. Consider field width in table layout
+
+================================================================================
+FIELD TYPES SUPPORTED IN ALL LAYOUTS
+================================================================================
+
+1. TEXT         → <input type="text">
+2. EMAIL        → <input type="email">
+3. NUMBER       → <p-inputNumber> (PrimeNG)
+4. TEXTAREA     → <textarea> with configurable rows
+5. SELECT       → <p-dropdown> (PrimeNG) with options
+6. CHECKBOX     → <p-checkbox> (PrimeNG)
+7. RADIO        → <p-radiobutton> (PrimeNG) with options
+8. DATE         → <p-calendar> (PrimeNG) with date picker
+9. TIME         → <p-calendar> (PrimeNG) with time picker
+
+================================================================================
+FIELD PROPERTIES
+================================================================================
+
+REQUIRED PROPERTIES:
+- name: string          → Unique field identifier
+- label: string         → Display label
+- type: string          → Field type (see above)
+
+OPTIONAL PROPERTIES:
+- value: any            → Default value
+- required: boolean     → Validation (default: false)
+- disabled: boolean     → Disable field (default: false)
+- readonly: boolean     → Read-only field (default: false)
+- placeholder: string   → Placeholder text
+- options: array        → For select/radio (e.g., [{label, value}])
+- rows: number          → For textarea (default: 3)
+- hint: string          → Help text below field
+- validators: array     → Custom validators
+
+================================================================================
+RESPONSIVE BEHAVIOR
+================================================================================
+
+DESKTOP (> 768px):
+- default: Single column (800px max)
+- multi-columns: Shows configured columns (2, 3, or 4)
+- multi-rows: Full table with horizontal scroll if needed
+- shift-columns: Full table with all shifts visible
+
+MOBILE (<= 768px):
+- default: Same as desktop
+- multi-columns: Collapses to 1 column
+- multi-rows: Horizontal scrolling enabled
+- shift-columns: Horizontal scrolling enabled
+
+================================================================================
+STYLING FEATURES
+================================================================================
+
+COMMON FEATURES:
+✓ Royal Blue theme (primary color: #4169E1)
+✓ Smooth transitions and animations
+✓ Hover effects on interactive elements
+✓ Focus states for accessibility
+✓ Error validation with red highlighting
+✓ Required field markers (red asterisk)
+✓ PrimeNG overlays append to body (no z-index issues)
+
+TABLE LAYOUTS (multi-rows & shift-columns):
+✓ Sticky first column for easy reference
+✓ Gradient headers with royal blue accent
+✓ Hover effect on rows
+✓ Professional borders and spacing
+✓ Responsive cell sizing
+✓ Readonly field styling (gray background)
+
+================================================================================
+VALIDATION
+================================================================================
+
+BUILT-IN VALIDATION:
+- required: Field must have a value
+- email: Valid email format
+- minLength: Minimum character length
+- maxLength: Maximum character length
+- min: Minimum numeric value
+- max: Maximum numeric value
+- pattern: Custom regex pattern
+
+VALIDATION DISPLAY:
+- Invalid fields: Red border
+- Error messages: Red text below field
+- Required fields: Red asterisk (*) after label
+- Touch/dirty validation: Shows errors after user interaction
+
+================================================================================
+BEST PRACTICES
+================================================================================
+
+1. CHOOSE THE RIGHT LAYOUT:
+   - Few fields (1-5): Use "default"
+   - Many fields (6-20): Use "multi-columns" with 2-3 columns
+   - Time-series data: Use "multi-rows"
+   - Shift operations: Use "shift-columns"
+   - Line items/lists: Use "dynamic-rows"
+
+2. FIELD ORGANIZATION:
+   - Group related fields in the same section
+   - Use logical field order (top-to-bottom, left-to-right)
+   - Keep labels concise and clear
+
+3. RESPONSIVE DESIGN:
+   - Test on mobile devices
+   - Use appropriate column counts (don't overcrowd)
+   - Consider horizontal scrolling for tables
+
+4. VALIDATION:
+   - Mark truly required fields only
+   - Provide helpful error messages
+   - Use placeholders for format guidance
+
+5. ACCESSIBILITY:
+   - Use clear, descriptive labels
+   - Include field hints when needed
+   - Ensure proper tab order
+
+================================================================================
+EXAMPLES
+================================================================================
+
+See: src/assets/audits/LAYOUT_EXAMPLES.json
+This file contains working examples of all four layout types with various
+field configurations.
+
+================================================================================
+

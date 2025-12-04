@@ -1,0 +1,67 @@
+<div class="help-container">
+  <h1 class="page-title">Help & Support</h1>
+
+  <p-card styleClass="help-card">
+    <ng-template pTemplate="header">
+      <div class="card-header">
+        <h2>Frequently Asked Questions</h2>
+      </div>
+    </ng-template>
+
+    <p-accordion>
+      <p-accordionTab *ngFor="let faq of faqs; let i = index" [header]="faq.question">
+        <p>{{ faq.answer }}</p>
+      </p-accordionTab>
+    </p-accordion>
+  </p-card>
+
+  <p-card styleClass="contact-card">
+    <ng-template pTemplate="header">
+      <div class="card-header">
+        <h2>Contact Support</h2>
+      </div>
+    </ng-template>
+
+    <div class="contact-info">
+      <div class="contact-item">
+        <i class="pi pi-envelope"></i>
+        <div>
+          <strong>Email:</strong>
+          <p>{{ contactInfo.email }}</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <i class="pi pi-phone"></i>
+        <div>
+          <strong>Phone:</strong>
+          <p>{{ contactInfo.phone }}</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <i class="pi pi-clock"></i>
+        <div>
+          <strong>Hours:</strong>
+          <p>{{ contactInfo.hours }}</p>
+        </div>
+      </div>
+    </div>
+  </p-card>
+
+  <p-card styleClass="resources-card">
+    <ng-template pTemplate="header">
+      <div class="card-header">
+        <h2>Additional Resources</h2>
+      </div>
+    </ng-template>
+
+    <ul class="resources-list">
+      <li><i class="pi pi-book"></i> User Manual (PDF)</li>
+      <li><i class="pi pi-video"></i> Video Tutorials</li>
+      <li><i class="pi pi-download"></i> Training Materials</li>
+      <li><i class="pi pi-file"></i> System Requirements</li>
+    </ul>
+  </p-card>
+</div>
+

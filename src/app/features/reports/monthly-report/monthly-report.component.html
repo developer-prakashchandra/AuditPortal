@@ -1,0 +1,58 @@
+<div class="report-container">
+  <div class="navigation-bar">
+    <p-button 
+      icon="pi pi-arrow-left" 
+      [text]="true"
+      label="Back to Reports"
+      (onClick)="goBack()"
+      styleClass="back-button"
+    ></p-button>
+  </div>
+
+  <h1 class="page-title">Monthly Report</h1>
+
+  <div class="report-controls">
+    <div class="month-selector">
+      <label>Select Month:</label>
+      <p-dropdown 
+        [(ngModel)]="selectedMonth" 
+        [options]="months" 
+        optionLabel="name"
+        placeholder="Select a Month"
+      ></p-dropdown>
+    </div>
+    <p-button 
+      label="Export PDF"
+      icon="pi pi-download"
+      iconPos="right"
+      severity="success"
+      (onClick)="exportReport()"
+      styleClass="export-button"
+      [rounded]="true"
+    ></p-button>
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-card" *ngFor="let item of monthlySummary">
+      <div class="summary-icon" [style.background-color]="item.color">
+        <i [class]="'pi ' + item.icon"></i>
+      </div>
+      <div class="summary-content">
+        <h3>{{ item.value }}</h3>
+        <p>{{ item.label }}</p>
+      </div>
+    </div>
+  </div>
+
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="card-header">
+        <h2>Weekly Audit Completion</h2>
+      </div>
+    </ng-template>
+    <div class="chart-container">
+      <p-chart type="bar" [data]="chartData" [options]="chartOptions"></p-chart>
+    </div>
+  </p-card>
+</div>
+

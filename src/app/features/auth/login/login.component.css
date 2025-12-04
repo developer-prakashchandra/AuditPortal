@@ -1,0 +1,214 @@
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.login-card-wrapper {
+  width: 100%;
+  max-width: 450px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.login-logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(65, 105, 225, 0.2));
+  animation: logoZoomIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes logoZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.login-header h1 {
+  color: var(--primary-color);
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  animation: slideInDown 0.5s ease 0.2s both;
+}
+
+.login-header p {
+  color: var(--text-light);
+  font-size: 14px;
+  margin: 0;
+  animation: fadeIn 0.5s ease 0.4s both;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field label {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.form-field input,
+.form-field p-password {
+  width: 100%;
+}
+
+.form-field input:focus {
+  transform: translateY(-1px);
+}
+
+.error-message {
+  color: #EF4444;
+  font-size: 12px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.error-message::before {
+  content: "⚠";
+  font-size: 14px;
+}
+
+/* Success State */
+.form-field input.ng-valid.ng-touched {
+  border-color: #10B981;
+}
+
+/* Loading State */
+.form-field input:disabled {
+  cursor: wait;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.login-footer small {
+  color: var(--text-light);
+}
+
+:host ::ng-deep .p-password {
+  width: 100%;
+}
+
+:host ::ng-deep .p-password input {
+  width: 100%;
+}
+
+:host ::ng-deep .w-full {
+  width: 100%;
+}
+
+:host ::ng-deep .ng-invalid.ng-touched {
+  border-color: #EF4444 !important;
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+:host ::ng-deep .p-button {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 24px;
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .p-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(65, 105, 225, 0.4);
+}
+
+:host ::ng-deep .p-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+:host ::ng-deep .p-message {
+  margin: 16px 0;
+  border-radius: 6px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 576px) {
+  .login-card-wrapper {
+    max-width: 100%;
+  }
+  
+  .login-logo {
+    height: 64px;
+  }
+  
+  .login-header {
+    gap: 12px;
+  }
+  
+  .login-header h1 {
+    font-size: 24px;
+  }
+}
+

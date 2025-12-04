@@ -1,0 +1,672 @@
+<div class="form-renderer-container">
+  <!-- Header -->
+  <div class="form-header">
+    <p-button 
+      icon="pi pi-arrow-left" 
+      [text]="true"
+      label="Back"
+      (onClick)="goBack()"
+      styleClass="back-button"
+    ></p-button>
+  </div>
+
+  <!-- Title -->
+  <h1 class="page-title">CCPP-22 DEMIN PLANT LOCAL LOG SHEET</h1>
+  <p class="form-description">Dubai Power Operations Procedures - DEMIN Plant Local Log Sheet for daily monitoring (Shift-A & Shift-B)</p>
+
+  <!-- Form Sections -->
+  <div class="form-sections">
+
+  <!-- General Information Card -->
+  <p-card styleClass="section-card">
+    <ng-template pTemplate="header">
+      <div class="section-header">
+        <h2>General Information</h2>
+      </div>
+    </ng-template>
+
+    <form [formGroup]="generalForm" class="general-form">
+      <div class="form-field">
+        <label for="date">Date <span class="required-mark">*</span></label>
+        <p-calendar
+          id="date"
+          formControlName="date"
+          [showIcon]="true"
+          dateFormat="dd/mm/yy"
+          appendTo="body"
+          [style]="{'width': '100%'}"
+        ></p-calendar>
+        <small class="p-error" *ngIf="isFieldInvalid(generalForm, 'date')">
+          Date is required
+        </small>
+      </div>
+
+      <div class="form-field">
+        <label for="day">Day</label>
+        <input
+          id="day"
+          type="text"
+          pInputText
+          formControlName="day"
+          [style]="{'width': '100%'}"
+          readonly
+        />
+      </div>
+    </form>
+  </p-card>
+
+  <!-- Audit Information Card with Shift-based Layout -->
+  <p-card styleClass="section-card">
+    <ng-template pTemplate="header">
+      <div class="section-header">
+        <h2>Audit Information</h2>
+      </div>
+    </ng-template>
+
+    <div class="shift-table-container">
+      <table class="shift-table">
+        <thead>
+          <tr>
+            <th class="field-column">Field</th>
+            <th class="shift-column">Shift-A</th>
+            <th class="shift-column">Shift-B</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Time -->
+          <tr class="group-header-row">
+            <td colspan="3" class="group-title">Time</td>
+          </tr>
+          <tr>
+            <td class="field-label">Time <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <input
+                type="time"
+                pInputText
+                [formControl]="$any(shiftAForm.get('time'))"
+                [class.ng-invalid]="isFieldInvalid(shiftAForm, 'time')"
+              />
+            </td>
+            <td class="shift-input-cell">
+              <input
+                type="time"
+                pInputText
+                [formControl]="$any(shiftBForm.get('time'))"
+                [class.ng-invalid]="isFieldInvalid(shiftBForm, 'time')"
+              />
+            </td>
+          </tr>
+
+          <!-- MIXED BED-1 -->
+          <tr class="group-header-row">
+            <td colspan="3" class="group-title">MIXED BED-1</td>
+          </tr>
+          <tr>
+            <td class="field-label">Status (IS/SB) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-dropdown
+                [formControl]="$any(shiftAForm.get('mixedBed1Status'))"
+                [options]="statusOptions"
+                placeholder="Select"
+                appendTo="body"
+                [style]="{'width': '100%'}"
+              ></p-dropdown>
+            </td>
+            <td class="shift-input-cell">
+              <p-dropdown
+                [formControl]="$any(shiftBForm.get('mixedBed1Status'))"
+                [options]="statusOptions"
+                placeholder="Select"
+                appendTo="body"
+                [style]="{'width': '100%'}"
+              ></p-dropdown>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Outlet Flow (M3/HR) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('mixedBed1OutletFlow'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('mixedBed1OutletFlow'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Outlet Conductivity (us/cm) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('mixedBed1OutletConductivity'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('mixedBed1OutletConductivity'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Outlet Silica (ppm) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('mixedBed1OutletSilica'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('mixedBed1OutletSilica'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+
+          <!-- MIXED BED-2 -->
+          <tr class="group-header-row">
+            <td colspan="3" class="group-title">MIXED BED-2</td>
+          </tr>
+          <tr>
+            <td class="field-label">Status (IS/SB) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-dropdown
+                [formControl]="$any(shiftAForm.get('mixedBed2Status'))"
+                [options]="statusOptions"
+                placeholder="Select"
+                appendTo="body"
+                [style]="{'width': '100%'}"
+              ></p-dropdown>
+            </td>
+            <td class="shift-input-cell">
+              <p-dropdown
+                [formControl]="$any(shiftBForm.get('mixedBed2Status'))"
+                [options]="statusOptions"
+                placeholder="Select"
+                appendTo="body"
+                [style]="{'width': '100%'}"
+              ></p-dropdown>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Outlet Flow (M3/HR) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('mixedBed2OutletFlow'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('mixedBed2OutletFlow'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Outlet Conductivity (us/cm) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('mixedBed2OutletConductivity'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('mixedBed2OutletConductivity'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Outlet Silica (ppm) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('mixedBed2OutletSilica'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('mixedBed2OutletSilica'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+
+          <!-- RAW WATER PUMP -->
+          <tr class="group-header-row">
+            <td colspan="3" class="group-title">RAW WATER PUMP</td>
+          </tr>
+          <tr>
+            <td class="field-label">Status (I/S) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-dropdown
+                [formControl]="$any(shiftAForm.get('rawWaterPumpStatus'))"
+                [options]="pumpStatusOptions"
+                placeholder="Select"
+                appendTo="body"
+                [style]="{'width': '100%'}"
+              ></p-dropdown>
+            </td>
+            <td class="shift-input-cell">
+              <p-dropdown
+                [formControl]="$any(shiftBForm.get('rawWaterPumpStatus'))"
+                [options]="pumpStatusOptions"
+                placeholder="Select"
+                appendTo="body"
+                [style]="{'width': '100%'}"
+              ></p-dropdown>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Suction Pressure (BAR) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('rawWaterSuctionPressure'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('rawWaterSuctionPressure'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Discharge Pressure (BAR) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('rawWaterDischPressure'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('rawWaterDischPressure'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+
+          <!-- DEMIN WATER PUMP -->
+          <tr class="group-header-row">
+            <td colspan="3" class="group-title">DEMIN WATER PUMP</td>
+          </tr>
+          <tr>
+            <td class="field-label">Status (I/S) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-dropdown
+                [formControl]="$any(shiftAForm.get('deminWaterPumpStatus'))"
+                [options]="pumpStatusOptions"
+                placeholder="Select"
+                appendTo="body"
+                [style]="{'width': '100%'}"
+              ></p-dropdown>
+            </td>
+            <td class="shift-input-cell">
+              <p-dropdown
+                [formControl]="$any(shiftBForm.get('deminWaterPumpStatus'))"
+                [options]="pumpStatusOptions"
+                placeholder="Select"
+                appendTo="body"
+                [style]="{'width': '100%'}"
+              ></p-dropdown>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Suction Pressure (BAR) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('deminWaterSuctionPressure'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('deminWaterSuctionPressure'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Discharge Pressure (BAR) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('deminWaterDischPressure'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('deminWaterDischPressure'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+
+          <!-- CARTRIDGE FILTER -->
+          <tr class="group-header-row">
+            <td colspan="3" class="group-title">CARTRIDGE FILTER</td>
+          </tr>
+          <tr>
+            <td class="field-label">Status (I/S - 1/2) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-dropdown
+                [formControl]="$any(shiftAForm.get('cartridgeFilterStatus'))"
+                [options]="filterStatusOptions"
+                placeholder="Select"
+                appendTo="body"
+                [style]="{'width': '100%'}"
+              ></p-dropdown>
+            </td>
+            <td class="shift-input-cell">
+              <p-dropdown
+                [formControl]="$any(shiftBForm.get('cartridgeFilterStatus'))"
+                [options]="filterStatusOptions"
+                placeholder="Select"
+                appendTo="body"
+                [style]="{'width': '100%'}"
+              ></p-dropdown>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Pressure Before Filter (BAR) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('pressureBeforeFilter'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('pressureBeforeFilter'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Pressure After Filter (BAR) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('pressureAfterFilter'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('pressureAfterFilter'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Filter DP (BAR) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('filterDP'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('filterDP'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+
+          <!-- STORAGE TANK LEVELS -->
+          <tr class="group-header-row">
+            <td colspan="3" class="group-title">STORAGE TANK LEVELS</td>
+          </tr>
+          <tr>
+            <td class="field-label">Raw Water Tank (Mtrs) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('rawWaterTankLevel'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('rawWaterTankLevel'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Demin Water Tank (Mtrs) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('deminWaterTankLevel'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('deminWaterTankLevel'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">HCL Tank (%) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('hclTankLevel'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('hclTankLevel'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">NaOH Tank (%) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('naohTankLevel'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('naohTankLevel'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Neutralising Tank (%) <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftAForm.get('neutralisingTankLevel'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+            <td class="shift-input-cell">
+              <p-inputNumber
+                [formControl]="$any(shiftBForm.get('neutralisingTankLevel'))"
+                [minFractionDigits]="2"
+                [maxFractionDigits]="2"
+                [style]="{'width': '100%'}"
+              ></p-inputNumber>
+            </td>
+          </tr>
+
+          <!-- General Remarks -->
+          <tr class="group-header-row">
+            <td colspan="3" class="group-title">General Remarks</td>
+          </tr>
+          <tr>
+            <td class="field-label">Remarks (CHKS)</td>
+            <td class="shift-input-cell">
+              <textarea
+                pInputTextarea
+                [formControl]="$any(shiftAForm.get('generalRemarks'))"
+                rows="2"
+                [style]="{'width': '100%'}"
+              ></textarea>
+            </td>
+            <td class="shift-input-cell">
+              <textarea
+                pInputTextarea
+                [formControl]="$any(shiftBForm.get('generalRemarks'))"
+                rows="2"
+                [style]="{'width': '100%'}"
+              ></textarea>
+            </td>
+          </tr>
+
+          <!-- Operator Signature -->
+          <tr class="group-header-row">
+            <td colspan="3" class="group-title">Operator Signature</td>
+          </tr>
+          <tr>
+            <td class="field-label">Operator Name <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <input
+                type="text"
+                pInputText
+                [formControl]="$any(shiftAForm.get('operatorName'))"
+                readonly
+                [style]="{'width': '100%'}"
+                [class.ng-invalid]="isFieldInvalid(shiftAForm, 'operatorName')"
+              />
+            </td>
+            <td class="shift-input-cell">
+              <input
+                type="text"
+                pInputText
+                [formControl]="$any(shiftBForm.get('operatorName'))"
+                readonly
+                [style]="{'width': '100%'}"
+                [class.ng-invalid]="isFieldInvalid(shiftBForm, 'operatorName')"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td class="field-label">Employee ID <span class="required-mark">*</span></td>
+            <td class="shift-input-cell">
+              <input
+                type="text"
+                pInputText
+                [formControl]="$any(shiftAForm.get('operatorId'))"
+                readonly
+                [style]="{'width': '100%'}"
+              />
+            </td>
+            <td class="shift-input-cell">
+              <input
+                type="text"
+                pInputText
+                [formControl]="$any(shiftBForm.get('operatorId'))"
+                readonly
+                [style]="{'width': '100%'}"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </p-card>
+  </div>
+
+  <!-- Form Actions -->
+  <div class="form-actions">
+    <p-button
+      label="Cancel"
+      icon="pi pi-times"
+      (onClick)="cancel()"
+      styleClass="cancel-button"
+    ></p-button>
+    <p-button
+      label="Submit"
+      icon="pi pi-check"
+      iconPos="right"
+      (onClick)="submit()"
+      styleClass="submit-button"
+    ></p-button>
+  </div>
+</div>
+

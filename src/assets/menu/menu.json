@@ -1,0 +1,78 @@
+{
+  "items": [
+    {
+      "label": "Dashboard",
+      "icon": "pi pi-home",
+      "route": "/dashboard",
+      "expanded": false
+    },
+    {
+      "label": "Area",
+      "icon": "pi pi-map-marker",
+      "route": "/area",
+      "expanded": false,
+      "children": [
+        {
+          "label": "CCPP22",
+          "icon": "pi pi-building",
+          "route": "/area/CCPP22"
+        },
+        {
+          "label": "H Block",
+          "icon": "pi pi-building",
+          "route": "/area/h-block"
+        }
+      ]
+    },
+    {
+      "label": "Approvals",
+      "icon": "pi pi-check",
+      "route": "/approvals",
+      "expanded": false,
+      "children": [
+        {
+          "label": "Approval History",
+          "icon": "pi pi-history",
+          "route": "/approvals/history"
+        },
+        {
+          "label": "Daily Approvals",
+          "icon": "pi pi-calendar",
+          "route": "/approvals/daily"
+        }
+      ]
+    },
+    {
+      "label": "Reports",
+      "icon": "pi pi-chart-bar",
+      "route": "/reports",
+      "expanded": false,
+      "children": [
+        {
+          "label": "Daily Report",
+          "icon": "pi pi-calendar",
+          "route": "/reports/daily"
+        },
+        {
+          "label": "Monthly Report",
+          "icon": "pi pi-chart-line",
+          "route": "/reports/monthly"
+        }
+      ]
+    },
+    {
+      "label": "Help",
+      "icon": "pi pi-question-circle",
+      "route": "/help"
+    },
+    {
+      "separator": true
+    },
+    {
+      "label": "Logout",
+      "icon": "pi pi-sign-out",
+      "command": "logout"
+    }
+  ]
+}
+

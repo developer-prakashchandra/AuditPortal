@@ -1,0 +1,292 @@
+/* ===================================================================
+   COMMON AUDIT FORMS STYLES
+   Shared styles for all audit forms (JSON-driven and physical components)
+   =================================================================== */
+
+/* Container */
+.form-renderer-container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0 24px;
+}
+
+/* Loading & Error States */
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 20px;
+}
+
+.error-state {
+  color: #b42318;
+  font-weight: 600;
+}
+
+/* Form Header */
+.form-header {
+  margin-bottom: 24px;
+}
+
+/* Enhanced Back Button */
+:host ::ng-deep .back-button {
+  color: var(--text-color) !important;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 12px 20px !important;
+  border-radius: 8px;
+  border: 2px solid transparent !important;
+  background: white !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+:host ::ng-deep .back-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(65, 105, 225, 0.08), rgba(65, 105, 225, 0.12));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+:host ::ng-deep .back-button:hover::before {
+  opacity: 1;
+}
+
+:host ::ng-deep .back-button:hover {
+  color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  transform: translateX(-6px) scale(1.02);
+  box-shadow: 0 4px 16px rgba(65, 105, 225, 0.25);
+}
+
+:host ::ng-deep .back-button:active {
+  transform: translateX(-4px) scale(1.0);
+}
+
+:host ::ng-deep .back-button .p-button-label,
+:host ::ng-deep .back-button .p-button-icon {
+  position: relative;
+  z-index: 1;
+}
+
+:host ::ng-deep .back-button .p-button-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:host ::ng-deep .back-button:hover .p-button-icon {
+  transform: translateX(-5px) scale(1.1);
+  animation: bounceLeft 0.6s ease infinite;
+}
+
+@keyframes bounceLeft {
+  0%, 100% {
+    transform: translateX(-5px) scale(1.1);
+  }
+  50% {
+    transform: translateX(-8px) scale(1.1);
+  }
+}
+
+/* Form Description */
+.form-description {
+  color: var(--text-light);
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+/* Form Sections Container */
+.form-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 30px;
+}
+
+/* Section Card */
+:host ::ng-deep .section-card {
+  border-radius: 12px;
+  overflow: visible;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+:host ::ng-deep .section-card .p-card {
+  position: relative;
+  overflow: visible;
+}
+
+:host ::ng-deep .section-card .p-card-content {
+  overflow: visible;
+}
+
+:host ::ng-deep .section-card:hover {
+  box-shadow: 0 8px 24px rgba(65, 105, 225, 0.12);
+  transform: translateY(-2px);
+}
+
+:host ::ng-deep .section-card .p-card-header {
+  padding: 0;
+}
+
+/* Section Header */
+.section-header {
+  padding: 24px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px 12px 0 0;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Form Field */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field label {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-color, #2a2a2a);
+}
+
+.required-mark {
+  color: #D32F2F;
+  margin-left: 4px;
+  font-weight: 700;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Submit Button */
+:host ::ng-deep .submit-button {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 700;
+  padding: 12px 28px !important;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(65, 105, 225, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+:host ::ng-deep .submit-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+:host ::ng-deep .submit-button:hover::before {
+  left: 100%;
+}
+
+:host ::ng-deep .submit-button:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(65, 105, 225, 0.5);
+}
+
+:host ::ng-deep .submit-button:active {
+  transform: translateY(-1px) scale(1.01);
+}
+
+:host ::ng-deep .submit-button .p-button-icon-right {
+  transition: transform 0.3s ease;
+}
+
+:host ::ng-deep .submit-button:hover .p-button-icon-right {
+  transform: scale(1.2) rotate(360deg);
+}
+
+/* Cancel Button */
+:host ::ng-deep .cancel-button {
+  background: #F3F4F6 !important;
+  color: #6B7280 !important;
+  border: 2px solid #E5E7EB !important;
+  font-weight: 600;
+  padding: 12px 28px !important;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+:host ::ng-deep .cancel-button:hover {
+  background: #E5E7EB !important;
+  color: #374151 !important;
+  border-color: #D1D5DB !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep .cancel-button:active {
+  transform: translateY(0);
+}
+
+:host ::ng-deep .cancel-button .p-button-icon {
+  transition: transform 0.3s ease;
+}
+
+:host ::ng-deep .cancel-button:hover .p-button-icon {
+  transform: scale(1.1) rotate(-10deg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-renderer-container {
+    padding: 0 16px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+  
+  .form-actions button {
+    width: 100%;
+  }
+  
+  :host ::ng-deep .back-button {
+    font-size: 14px;
+    padding: 10px 16px !important;
+  }
+}
+

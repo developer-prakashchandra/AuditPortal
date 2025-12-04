@@ -1,0 +1,99 @@
+<div class="audit-detail-container">
+  <div class="navigation-bar">
+    <p-button 
+      icon="pi pi-arrow-left" 
+      [text]="true"
+      label="Back"
+      (onClick)="goBack()"
+      styleClass="back-button"
+    ></p-button>
+  </div>
+
+  <h1 class="page-title">{{ blockDisplayName }}</h1>
+  <p class="location-info" *ngIf="!isBlockLevelView">
+    Group: <strong>{{ groupDisplayName }}</strong>
+  </p>
+
+  <ng-container *ngIf="isBlockLevelView; else groupView">
+    <div class="group-sections">
+      <div class="group-section" *ngFor="let group of auditGroups">
+        <p-card>
+          <ng-template pTemplate="header">
+            <div class="group-header">
+              <div>
+                <h2>{{ group.label }}</h2>                
+              </div>
+            </div>
+          </ng-template>
+
+          <div class="forms-grid">
+            <div class="form-card" *ngFor="let audit of group.audits">
+              <div class="form-info">
+                <h3>{{ audit.name }}</h3>
+                <p class="audit-code">{{ audit.formCode }}</p>
+              </div>
+              <p-button 
+                label="Go"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                (onClick)="viewAuditForm(audit, group.code)"
+                styleClass="view-button"
+                [rounded]="true"
+              ></p-button>
+            </div>
+          </div>
+
+          <div class="empty-state" *ngIf="group.audits.length === 0">
+            <i class="pi pi-inbox"></i>
+            <p>No audit forms available</p>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="auditGroups.length === 0">
+      <i class="pi pi-inbox"></i>
+      <p>No audit forms available for this area</p>
+    </div>
+  </ng-container>
+
+  <ng-template #groupView>
+    <div class="group-sections">
+      <div class="group-section">
+        <p-card>
+          <ng-template pTemplate="header">
+            <div class="group-header">
+              <div>
+                <h2>{{ groupDisplayName || 'Audit Forms' }}</h2>
+                <span class="group-meta">{{ auditFiles.length }} audit forms • {{ group?.toUpperCase() }}</span>
+              </div>
+            </div>
+          </ng-template>
+
+          <div class="forms-grid">
+            <div class="form-card" *ngFor="let audit of auditFiles">
+              <div class="form-info">
+                <h3>{{ audit.name }}</h3>
+                <p class="audit-code">{{ audit.formCode }}</p>
+              </div>
+              <p-button 
+                label="Open Form"
+                icon="pi pi-arrow-right"
+                iconPos="right"
+                (onClick)="viewAuditForm(audit)"
+                styleClass="view-button"
+                [rounded]="true"
+              ></p-button>
+            </div>
+          </div>
+
+          <div class="empty-state" *ngIf="auditFiles.length === 0">
+            <i class="pi pi-inbox"></i>
+            <p>No audit forms available</p>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
