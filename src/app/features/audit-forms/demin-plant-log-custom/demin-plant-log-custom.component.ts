@@ -34,6 +34,15 @@ interface DropdownOption {
   styleUrls: ['./demin-plant-log-custom.component.css']
 })
 export class DeminPlantLogCustomComponent extends BaseAuditFormComponent implements OnInit {
+  // Warning messages per shift/control
+  warningMessagesA: { [key: string]: string | null } = {};
+  warningMessagesB: { [key: string]: string | null } = {};
+
+  // Ranges
+  private readonly FLOW_MIN = 50;
+  private readonly FLOW_MAX = 100;
+  private readonly COND_MIN = 10;
+  private readonly COND_MAX = 200;
   // Dropdown options
   readonly statusOptions: DropdownOption[] = [
     { label: 'In Service', value: 'IS' },
@@ -98,6 +107,54 @@ export class DeminPlantLogCustomComponent extends BaseAuditFormComponent impleme
     if (sub) {
       this.subscriptions.push(sub);
     }
+
+    // Setup range warning watchers for shift A and B
+    this.setupRangeWarnings(this.shiftAForm, this.warningMessagesA, 'A');
+    this.setupRangeWarnings(this.shiftBForm, this.warningMessagesB, 'B');
+  }
+
+  private setupRangeWarnings(form: FormGroup, target: { [key: string]: string | null }, shiftLabel: 'A' | 'B'): void {
+    const controlsToWatch = [
+      'mixedBed1OutletFlow',
+      'mixedBed1OutletConductivity',
+      'mixedBed2OutletFlow',
+      'mixedBed2OutletConductivity'
+    ];
+
+    controlsToWatch.forEach(controlName => {
+      const control = form.get(controlName);
+      if (!control) return;
+
+      const sub = control.valueChanges.subscribe((value: any) => {
+        // Only show warnings on user input (value change)
+        if (value === null || value === undefined || value === '') {
+          target[controlName] = null;
+          return;
+        }
+
+        const num = Number(value);
+        if (isNaN(num)) {
+          target[controlName] = null;
+          return;
+        }
+
+        if (controlName.toLowerCase().includes('flow')) {
+          if (num < this.FLOW_MIN || num > this.FLOW_MAX) {
+            target[controlName] = `Recommended range: ${this.FLOW_MIN} - ${this.FLOW_MAX}`;
+          } else {
+            target[controlName] = null;
+          }
+        } else if (controlName.toLowerCase().includes('conductivity')) {
+          if (num < this.COND_MIN || num > this.COND_MAX) {
+            target[controlName] = `Recommended range: ${this.COND_MIN} - ${this.COND_MAX}`;
+          } else {
+            target[controlName] = null;
+          }
+        }
+      });
+
+      this.subscriptions.push(sub);
+    });
   }
 
   private createShiftForm(): FormGroup {

@@ -131,6 +131,7 @@
                 [maxFractionDigits]="2"
                 [style]="{'width': '100%'}"
               ></p-inputNumber>
+              <div class="range-warning" *ngIf="warningMessagesA['mixedBed1OutletFlow']">{{warningMessagesA['mixedBed1OutletFlow']}}</div>
             </td>
             <td class="shift-input-cell">
               <p-inputNumber
@@ -139,6 +140,7 @@
                 [maxFractionDigits]="2"
                 [style]="{'width': '100%'}"
               ></p-inputNumber>
+              <div class="range-warning" *ngIf="warningMessagesB['mixedBed1OutletFlow']">{{warningMessagesB['mixedBed1OutletFlow']}}</div>
             </td>
           </tr>
           <tr>
@@ -150,6 +152,7 @@
                 [maxFractionDigits]="2"
                 [style]="{'width': '100%'}"
               ></p-inputNumber>
+              <div class="range-warning" *ngIf="warningMessagesA['mixedBed1OutletConductivity']">{{warningMessagesA['mixedBed1OutletConductivity']}}</div>
             </td>
             <td class="shift-input-cell">
               <p-inputNumber
@@ -158,6 +161,7 @@
                 [maxFractionDigits]="2"
                 [style]="{'width': '100%'}"
               ></p-inputNumber>
+              <div class="range-warning" *ngIf="warningMessagesB['mixedBed1OutletConductivity']">{{warningMessagesB['mixedBed1OutletConductivity']}}</div>
             </td>
           </tr>
           <tr>
@@ -214,6 +218,7 @@
                 [maxFractionDigits]="2"
                 [style]="{'width': '100%'}"
               ></p-inputNumber>
+              <div class="range-warning" *ngIf="warningMessagesA['mixedBed2OutletFlow']">{{warningMessagesA['mixedBed2OutletFlow']}}</div>
             </td>
             <td class="shift-input-cell">
               <p-inputNumber
@@ -222,6 +227,7 @@
                 [maxFractionDigits]="2"
                 [style]="{'width': '100%'}"
               ></p-inputNumber>
+              <div class="range-warning" *ngIf="warningMessagesB['mixedBed2OutletFlow']">{{warningMessagesB['mixedBed2OutletFlow']}}</div>
             </td>
           </tr>
           <tr>
@@ -233,6 +239,7 @@
                 [maxFractionDigits]="2"
                 [style]="{'width': '100%'}"
               ></p-inputNumber>
+              <div class="range-warning" *ngIf="warningMessagesA['mixedBed2OutletConductivity']">{{warningMessagesA['mixedBed2OutletConductivity']}}</div>
             </td>
             <td class="shift-input-cell">
               <p-inputNumber
@@ -241,6 +248,7 @@
                 [maxFractionDigits]="2"
                 [style]="{'width': '100%'}"
               ></p-inputNumber>
+              <div class="range-warning" *ngIf="warningMessagesB['mixedBed2OutletConductivity']">{{warningMessagesB['mixedBed2OutletConductivity']}}</div>
             </td>
           </tr>
           <tr>

@@ -219,3 +219,11 @@
     font-size: 24px;
   }
 }
+
+/* Range warning style */
+.range-warning {
+  display: block;
+  margin-top: 6px;
+  color: #b45309; /* amber/warning */
+  font-size: 0.9rem;
+}
