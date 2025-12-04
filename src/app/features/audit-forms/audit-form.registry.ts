@@ -13,7 +13,7 @@ export const AUDIT_FORM_COMPONENTS: Record<string, AuditFormComponentLoader> = {
   //   import('./manual-water-quality/manual-water-quality.component').then(
   //     m => m.ManualWaterQualityFormComponent
   //   ),
-  'CCPP22_DEMIN_PLANT-CUSTOM': () =>
+  'CCPP22_DEMIN_PLANT': () =>
     import('./demin-plant-log-custom/demin-plant-log-custom.component').then(
       m => m.DeminPlantLogCustomComponent
     )

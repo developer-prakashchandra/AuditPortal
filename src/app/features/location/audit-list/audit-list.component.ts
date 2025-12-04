@@ -61,15 +61,15 @@ const BLOCK_CONFIGS: Record<string, BlockConfig> = {
     label: 'CCPP22',
     groups: [
       buildGroupAudits('DEMIN_PLANT', 'DEMIN Plant', [
+        // {
+        //   id: 'CCPP22_DEMIN_PLANT',
+        //   name: 'CCPP-22 DEMIN Plant Local Log Sheet (JSON)',
+        //   formCode: 'PO/GEN.01.F171',
+        //   groupCode: 'DEMIN_PLANT',
+        //   groupName: 'DEMIN Plant'
+        // },
         {
           id: 'CCPP22_DEMIN_PLANT',
-          name: 'CCPP-22 DEMIN Plant Local Log Sheet (JSON)',
-          formCode: 'PO/GEN.01.F171',
-          groupCode: 'DEMIN_PLANT',
-          groupName: 'DEMIN Plant'
-        },
-        {
-          id: 'CCPP22_DEMIN_PLANT-CUSTOM',
           name: 'CCPP-22 DEMIN Plant Local Log Sheet (file)',
           formCode: 'PO/GEN.01.F171',
           groupCode: 'DEMIN_PLANT',
